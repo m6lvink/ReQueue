@@ -2,10 +2,6 @@
   "name": "ReQueue: Undo & Reshuffle",
   "package": "requeue",
   "author": "MK",
-  "version": "3.9.0",
+  "version": "4.3.1",
   "homepage": "https://ankiweb.net/shared/info/1247565211",
-  "conflicts": [],
-  "mod": 0,
-  "min_point_version": 0,
-  "max_point_version": 0
 }
