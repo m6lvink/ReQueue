@@ -14,7 +14,9 @@ def getDefaultConfig():
 def validateConfig(configData):
     cleanConfig = getDefaultConfig()
     if "cooldownDistance" in configData and isinstance(configData["cooldownDistance"], int):
-        cleanConfig["cooldownDistance"] = configData["cooldownDistance"]
+        cooldownDistance = configData["cooldownDistance"]
+        if 1 <= cooldownDistance <= 999:
+            cleanConfig["cooldownDistance"] = cooldownDistance
     if "shortcutKey" in configData and isinstance(configData["shortcutKey"], str):
         cleanConfig["shortcutKey"] = configData["shortcutKey"]
     return cleanConfig
