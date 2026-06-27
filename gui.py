@@ -55,9 +55,11 @@ class DashboardDialog(QDialog):
     def doSave(self):
         if self.isRecording:
             self.stopRecording()
-        
-        reQueueManager.userConfig["cooldownDistance"] = self.cooldownSpin.value()
-        reQueueManager.userConfig["shortcutKey"] = self.shortcutEdit.text()
+
+        reQueueManager.userConfig = mainInit.config.validateConfig({
+            "cooldownDistance": self.cooldownSpin.value(),
+            "shortcutKey": self.shortcutEdit.text(),
+        })
         reQueueManager.saveCurrentConfig()
         
         # Trigger shortcut refresh in main

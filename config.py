@@ -18,7 +18,9 @@ def validateConfig(configData):
         if 1 <= cooldownDistance <= 999:
             cleanConfig["cooldownDistance"] = cooldownDistance
     if "shortcutKey" in configData and isinstance(configData["shortcutKey"], str):
-        cleanConfig["shortcutKey"] = configData["shortcutKey"]
+        shortcutKey = configData["shortcutKey"].strip()
+        if shortcutKey:
+            cleanConfig["shortcutKey"] = shortcutKey
     return cleanConfig
 
 def loadUserConfig():
