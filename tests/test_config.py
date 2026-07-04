@@ -21,6 +21,12 @@ class ValidateConfigTests(unittest.TestCase):
                 validated = config.validateConfig({"cooldownDistance": value})
                 self.assertEqual(validated["cooldownDistance"], 15)
 
+    def test_rejects_blank_shortcut(self):
+        for value in ("", "   "):
+            with self.subTest(value=value):
+                validated = config.validateConfig({"shortcutKey": value})
+                self.assertEqual(validated["shortcutKey"], "Ctrl+Shift+U")
+
 
 if __name__ == "__main__":
     unittest.main()
