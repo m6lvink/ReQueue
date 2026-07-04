@@ -21,6 +21,12 @@ class ValidateConfigTests(unittest.TestCase):
                 validated = config.validateConfig({"cooldownDistance": value})
                 self.assertEqual(validated["cooldownDistance"], 15)
 
+    def test_rejects_invalid_config_shapes(self):
+        for value in ({"cooldownDistance": True}, [], "", None):
+            with self.subTest(value=value):
+                validated = config.validateConfig(value)
+                self.assertEqual(validated, config.getDefaultConfig())
+
     def test_rejects_blank_shortcut(self):
         for value in ("", "   "):
             with self.subTest(value=value):
