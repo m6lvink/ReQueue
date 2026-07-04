@@ -18,7 +18,9 @@ def validateConfig(configData):
         if 1 <= cooldownDistance <= 999:
             cleanConfig["cooldownDistance"] = cooldownDistance
     if "shortcutKey" in configData and isinstance(configData["shortcutKey"], str):
-        cleanConfig["shortcutKey"] = configData["shortcutKey"]
+        shortcutKey = configData["shortcutKey"].strip()
+        if shortcutKey:
+            cleanConfig["shortcutKey"] = shortcutKey
     return cleanConfig
 
 def loadUserConfig():
@@ -33,7 +35,10 @@ def loadUserConfig():
 
 def saveUserConfig(currentConfig):
     try:
+        cleanConfig = validateConfig(currentConfig)
+        currentConfig.clear()
+        currentConfig.update(cleanConfig)
         with open(configFile, 'w', encoding='utf-8') as fileHandle:
-            json.dump(currentConfig, fileHandle, ensure_ascii=False, indent=2)
+            json.dump(cleanConfig, fileHandle, ensure_ascii=False, indent=2)
     except:
         print("ReQueue: Save failed")
