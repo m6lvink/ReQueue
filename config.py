@@ -13,7 +13,9 @@ def getDefaultConfig():
 
 def validateConfig(configData):
     cleanConfig = getDefaultConfig()
-    if "cooldownDistance" in configData and isinstance(configData["cooldownDistance"], int):
+    if not isinstance(configData, dict):
+        return cleanConfig
+    if "cooldownDistance" in configData and isinstance(configData["cooldownDistance"], int) and not isinstance(configData["cooldownDistance"], bool):
         cooldownDistance = configData["cooldownDistance"]
         if 1 <= cooldownDistance <= 999:
             cleanConfig["cooldownDistance"] = cooldownDistance
