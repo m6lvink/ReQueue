@@ -31,7 +31,7 @@ def loadUserConfig():
             with open(configFile, 'r', encoding='utf-8') as fileHandle:
                 rawData = json.load(fileHandle)
                 return validateConfig(rawData)
-        except:
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             return getDefaultConfig()
     return getDefaultConfig()
 
@@ -42,5 +42,5 @@ def saveUserConfig(currentConfig):
         currentConfig.update(cleanConfig)
         with open(configFile, 'w', encoding='utf-8') as fileHandle:
             json.dump(cleanConfig, fileHandle, ensure_ascii=False, indent=2)
-    except:
+    except (OSError, TypeError, ValueError):
         print("ReQueue: Save failed")
