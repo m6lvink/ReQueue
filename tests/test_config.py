@@ -1,5 +1,6 @@
 import importlib.util
 import pathlib
+import tempfile
 import unittest
 
 
@@ -32,6 +33,17 @@ class ValidateConfigTests(unittest.TestCase):
             with self.subTest(value=value):
                 validated = config.validateConfig({"shortcutKey": value})
                 self.assertEqual(validated["shortcutKey"], "Ctrl+Shift+U")
+
+    def test_load_user_config_falls_back_for_invalid_json(self):
+        with tempfile.TemporaryDirectory() as tempDir:
+            config_path = pathlib.Path(tempDir) / "user_config.json"
+            config_path.write_text("{bad json", encoding="utf-8")
+            original_path = config.configFile
+            try:
+                config.configFile = str(config_path)
+                self.assertEqual(config.loadUserConfig(), config.getDefaultConfig())
+            finally:
+                config.configFile = original_path
 
 
 if __name__ == "__main__":
